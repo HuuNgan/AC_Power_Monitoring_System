@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 # Created by https://www.toptal.com/developers/gitignore/api/c,altium,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=c,altium,python
+=======
+
+# Created by https://www.toptal.com/developers/gitignore/api/altium,ltspice
+# Edit at https://www.toptal.com/developers/gitignore?templates=altium,ltspice
+>>>>>>> 1fc37f952c7af79e0276667331edfc4433107859
 
 ### Altium ###
 # Previews Folders
@@ -21,6 +27,7 @@ Project\ Outputs*/
 **/*.ldb
 
 
+<<<<<<< HEAD
 ### C ###
 # Prerequisites
 *.d
@@ -222,3 +229,20 @@ Thumbs.db #thumbnail cache on Windows
 
 
 # End of https://www.toptal.com/developers/gitignore/api/c,altium,python
+=======
+### LTspice ###
+# gitignore template for LTspice
+# website: https://www.analog.com/en/design-center/design-tools-and-calculators/ltspice-simulator.html
+
+# Logfile
+*.log
+
+# Simulation Outputs
+*.raw
+*.fft
+
+# Netlist
+*.net
+
+# End of https://www.toptal.com/developers/gitignore/api/altium,ltspice
+>>>>>>> 1fc37f952c7af79e0276667331edfc4433107859
