@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Created by https://www.toptal.com/developers/gitignore/api/c,altium,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=c,altium,python
 =======
@@ -246,3 +247,9 @@ Thumbs.db #thumbnail cache on Windows
 
 # End of https://www.toptal.com/developers/gitignore/api/altium,ltspice
 >>>>>>> 1fc37f952c7af79e0276667331edfc4433107859
+=======
+
+Hardware/AC Measure Monitor Senso Board/History/
+
+Hardware/AC Measure Monitor Senso Board/Project Logs for AC Measure Monitor Senso Board/
+>>>>>>> Micls
