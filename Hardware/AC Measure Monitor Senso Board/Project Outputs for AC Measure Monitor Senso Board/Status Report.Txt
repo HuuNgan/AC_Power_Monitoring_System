@@ -1,0 +1,21 @@
+Output: Gerber Files
+Type  : Gerber
+From  : Variant [[No Variations]] of PCB Document [MeasurePCB.PcbDoc]
+   Generated File[MeasurePCB.GTO]
+   Generated File[MeasurePCB.GTP]
+   Generated File[MeasurePCB.GTS]
+   Generated File[MeasurePCB.GTL]
+   Generated File[MeasurePCB.GBL]
+   Generated File[MeasurePCB.GBS]
+   Generated File[MeasurePCB.GBP]
+   Generated File[MeasurePCB.GBO]
+   Generated File[MeasurePCB.GKO]
+   Generated File[MeasurePCB.RUL]
+   Generated File[MeasurePCB.EXTREP]
+   Generated File[MeasurePCB.REP]
+
+
+Files Generated   : 12
+Documents Printed : 0
+
+Finished Output Generation At 11:19:08 AM On 4/13/2021
