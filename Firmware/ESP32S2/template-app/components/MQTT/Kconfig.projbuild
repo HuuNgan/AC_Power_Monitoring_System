@@ -1,0 +1,14 @@
+menu "Topic"
+    config VOLTAGE_TRANSFER
+        string "voltage_topic_1"
+        default "client/voltage"
+
+    config CURRENT_TRANSFER
+        string "current_topic"
+        default "client/current"
+        
+    config PHASE_TRANSFER
+        string "phase_topic_1"
+        default "client/phase"
+    
+endmenu

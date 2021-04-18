@@ -1,0 +1,18 @@
+menu "SSID"
+    config SSID_PIF
+        string "PIFLab"
+        default "PIFLab"
+
+    config SSPW_PIF
+        string "PIFLab pass"
+        default "Payitforward"
+
+    config SSID_CF1
+        string "Feel Coffee & Tea Express 1"
+        default "Feel Coffee & Tea Express 1"
+
+    config SSPW_CF1
+        string "Feel Coffee & Tea Express 1 pass"
+        default "giaohangmienphi"
+
+endmenu

@@ -3,7 +3,9 @@
 
 static const char *TAG = "MQTT_EXAMPLE";
 
-static const char *IP_Broker = "192.168.1.95";
+static const char *IP_Broker = "192.168.1.5";
+
+esp_mqtt_client_handle_t client;
 
 static esp_err_t mqtt_event_handler_cb(esp_mqtt_event_handle_t event)
 {
@@ -63,41 +65,20 @@ static void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_
 
 void MQTT_init(void)
 {
-    esp_mqtt_client_config_t mqtt_cfg = {
+    esp_mqtt_client_config_t mqtt_cfg = 
+    {
         .host = IP_Broker,
+        .port = 1883,
     };
-#if CONFIG_BROKER_URL_FROM_STDIN
-    char line[128];
 
-    if (strcmp(mqtt_cfg.uri, "FROM_STDIN") == 0) 
-    {
-        int count = 0;
-        printf("Please enter url of mqtt broker\n");
-        while (count < 128) {
-            int c = fgetc(stdin);
-            if (c == '\n') 
-            {
-                line[count] = '\0';
-                break;
-            }
-            else if (c > 0 && c < 127) 
-            {
-                line[count] = c;
-                ++count;
-            }
-            vTaskDelay(10 / portTICK_PERIOD_MS);
-        }
-        mqtt_cfg.uri = line;
-        printf("Broker url: %s\n", line);
-    } 
-    else 
-    {
-        ESP_LOGE(TAG, "Configuration mismatch: wrong broker url");
-        abort();
-    }
-#endif /* CONFIG_BROKER_URL_FROM_STDIN */
-
-    esp_mqtt_client_handle_t client = esp_mqtt_client_init(&mqtt_cfg);
+    client = esp_mqtt_client_init(&mqtt_cfg);
     esp_mqtt_client_register_event(client, ESP_EVENT_ANY_ID, mqtt_event_handler, client);
     esp_mqtt_client_start(client);
+}
+
+void vTaskMQTTSend(float input)
+{
+    char str_send[50];
+    sprintf(str_send,"%f",input);
+    esp_mqtt_client_publish(client,CONFIG_VOLTAGE_TRANSFER,str_send,0,0,0);
 }

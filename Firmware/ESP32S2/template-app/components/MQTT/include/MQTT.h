@@ -20,3 +20,4 @@
 #include "mqtt_client.h"
 
 void MQTT_init(void);
+void vTaskMQTTSend(float input);

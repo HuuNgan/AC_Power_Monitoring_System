@@ -1,7 +1,7 @@
 #include "include/Wifi.h"
 
-#define EXAMPLE_ESP_WIFI_SSID      "Feel Coffee & Tea Express 1"
-#define EXAMPLE_ESP_WIFI_PASS      "giaohangmienphi"
+#define EXAMPLE_ESP_WIFI_SSID      CONFIG_SSID_PIF
+#define EXAMPLE_ESP_WIFI_PASS      CONFIG_SSPW_PIF
 #define EXAMPLE_ESP_MAXIMUM_RETRY  5
 
 #define WIFI_CONNECTED_BIT BIT0

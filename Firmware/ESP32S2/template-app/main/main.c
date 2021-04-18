@@ -32,6 +32,8 @@ void init_config(void)
     gpio_set_direction(BLINK_LED,GPIO_MODE_OUTPUT);
 
     wifi_init_sta();
+    adc_init();
+    MQTT_init();
 }
 
 void app_main(void)
@@ -44,14 +46,16 @@ void app_main(void)
     ESP_ERROR_CHECK(ret);
 
     init_config();
+    vTaskDelay(1000);
 
     while(1)
     {
-        // printf("Hi\n");
-        // gpio_set_level(BLINK_LED,0);
-        // vTaskDelay(100);
+        vTaskADC2Conversation();
+        // printf("Hello world\n");
+        gpio_set_level(BLINK_LED,0);
+        vTaskDelay(10);
         // printf("Bye\n");
-        // gpio_set_level(BLINK_LED,1);
-        // vTaskDelay(100);
+        gpio_set_level(BLINK_LED,1);
+        vTaskDelay(10);
     }
 }

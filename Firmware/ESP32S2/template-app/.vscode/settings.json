@@ -11,7 +11,10 @@
   "files.associations": {
     "string.h": "c",
     "event_groups.h": "c",
-    "stdio.h": "c"
+    "stdio.h": "c",
+    "mqtt_client.h": "c",
+    "err.h": "c",
+    "adc.h": "c"
   },
   "idf.port": "/dev/ttyUSB0",
   "idf.adapterTargetName": "esp32s2",
