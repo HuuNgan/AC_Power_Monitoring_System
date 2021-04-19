@@ -1,7 +1,11 @@
 menu "Topic"
-    config VOLTAGE_TRANSFER
+    config VOLTAGE_P_TRANSFER
         string "voltage_topic_1"
-        default "client/voltage"
+        default "client/voltage_p"
+
+    config VOLTAGE_N_TRANSFER
+        string "voltage_topic_2"
+        default "client/voltage_n"
 
     config CURRENT_TRANSFER
         string "current_topic"

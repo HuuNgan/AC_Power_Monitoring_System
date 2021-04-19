@@ -12,12 +12,8 @@
 #include "freertos/semphr.h"
 #include "freertos/queue.h"
 
-#include "lwip/sockets.h"
-#include "lwip/dns.h"
-#include "lwip/netdb.h"
+#include "esp_timer.h"
 
-#include "esp_log.h"
-#include "mqtt_client.h"
+volatile esp_timer_handle_t periodic_timer;
 
-void MQTT_init(void);
-void vTaskMQTTSend(float *input);
+void Timer_phase_init(void);

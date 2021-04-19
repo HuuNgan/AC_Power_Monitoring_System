@@ -14,7 +14,8 @@
     "stdio.h": "c",
     "mqtt_client.h": "c",
     "err.h": "c",
-    "adc.h": "c"
+    "adc.h": "c",
+    "complex": "c"
   },
   "idf.port": "/dev/ttyUSB0",
   "idf.adapterTargetName": "esp32s2",

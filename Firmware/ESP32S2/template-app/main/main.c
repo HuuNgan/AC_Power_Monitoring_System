@@ -23,6 +23,7 @@
 #include "../components/Wifi/include/Wifi.h"
 #include "../components/MQTT/include/MQTT.h"
 #include "../components/ADC/include/ADC.h"
+#include "../components/Timer/include/Timer.h"
 
 #define BLINK_LED 2
 
@@ -33,6 +34,7 @@ void init_config(void)
 
     wifi_init_sta();
     adc_init();
+    Timer_phase_init();
     MQTT_init();
 }
 
@@ -53,9 +55,9 @@ void app_main(void)
         vTaskADC2Conversation();
         // printf("Hello world\n");
         gpio_set_level(BLINK_LED,0);
-        vTaskDelay(10);
+        vTaskDelay(100);
         // printf("Bye\n");
         gpio_set_level(BLINK_LED,1);
-        vTaskDelay(10);
+        vTaskDelay(100);
     }
 }

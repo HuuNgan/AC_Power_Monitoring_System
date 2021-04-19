@@ -3,7 +3,7 @@
 
 static const char *TAG = "MQTT_EXAMPLE";
 
-static const char *IP_Broker = "192.168.1.5";
+static const char *IP_Broker = "192.168.1.8";
 
 esp_mqtt_client_handle_t client;
 
@@ -76,9 +76,13 @@ void MQTT_init(void)
     esp_mqtt_client_start(client);
 }
 
-void vTaskMQTTSend(float input)
+void vTaskMQTTSend(float *input)
 {
     char str_send[50];
-    sprintf(str_send,"%f",input);
-    esp_mqtt_client_publish(client,CONFIG_VOLTAGE_TRANSFER,str_send,0,0,0);
+    sprintf(str_send,"%f",*(input));
+    esp_mqtt_client_publish(client,CONFIG_VOLTAGE_P_TRANSFER,str_send,0,0,0);
+    sprintf(str_send,"%f",*(input+1));
+    esp_mqtt_client_publish(client,CONFIG_VOLTAGE_N_TRANSFER,str_send,0,0,0);
+    sprintf(str_send,"%f",*(input+2));
+    esp_mqtt_client_publish(client,CONFIG_CURRENT_TRANSFER,str_send,0,0,0);
 }
