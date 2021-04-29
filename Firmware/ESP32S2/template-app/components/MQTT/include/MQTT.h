@@ -19,5 +19,8 @@
 #include "esp_log.h"
 #include "mqtt_client.h"
 
+#include "../../../main/Init.h"
+
 void MQTT_init(void);
-void vTaskMQTTSend(float *input);
+void vTaskMQTTPublish(float *input);
+void vTaskMQTTSubscribe(void);

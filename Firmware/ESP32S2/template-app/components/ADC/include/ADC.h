@@ -12,9 +12,12 @@
 
 #define ADC_Calib 0.0003277
 
-#define ADC_CHANNEL_VOLTAGE_P   0
-#define ADC_CHANNEL_VOLTAGE_N   1
-#define ADC_CHANNEL_CURRENT     2
+#define Voltage_Calib 200
+#define Current_Calib 36.8
+
+#define ADC_CHANNEL_VOLTAGE_P   2
+#define ADC_CHANNEL_VOLTAGE_N   3
+#define ADC_CHANNEL_CURRENT     0
 
 void adc_init(void);
 void vTaskADC2Conversation(void);

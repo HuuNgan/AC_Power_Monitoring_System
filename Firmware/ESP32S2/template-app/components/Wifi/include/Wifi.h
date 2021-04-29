@@ -8,8 +8,10 @@
 #include "esp_event.h"
 #include "esp_log.h"
 #include "driver/gpio.h"
+#include "esp_smartconfig.h"
 
 #include "lwip/err.h"
 #include "lwip/sys.h"
 
 void wifi_init_sta(void);
+void vTaskSmartConfig(void);

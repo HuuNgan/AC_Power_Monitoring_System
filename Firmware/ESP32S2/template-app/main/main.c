@@ -27,11 +27,17 @@
 
 #define BLINK_LED 2
 
+void init_button(void)
+{
+    //do not thing
+}
+
 void init_config(void)
 {
     gpio_pad_select_gpio(BLINK_LED);
     gpio_set_direction(BLINK_LED,GPIO_MODE_OUTPUT);
 
+    init_button();
     wifi_init_sta();
     adc_init();
     Timer_phase_init();
@@ -54,10 +60,10 @@ void app_main(void)
     {
         vTaskADC2Conversation();
         // printf("Hello world\n");
-        gpio_set_level(BLINK_LED,0);
+        // gpio_set_level(BLINK_LED,0);
         vTaskDelay(100);
         // printf("Bye\n");
-        gpio_set_level(BLINK_LED,1);
+        // gpio_set_level(BLINK_LED,1);
         vTaskDelay(100);
     }
 }

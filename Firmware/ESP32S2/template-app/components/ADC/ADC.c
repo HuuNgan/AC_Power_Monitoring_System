@@ -26,7 +26,7 @@ void adc_init(void)
 void vTaskADC2Conversation(void)
 {
     int read_raw=0;
-    float voltage_data[3];
+    float voltage_data[3],raw_data[3];
     for (int i = 0; i < 3; i++)
     {
         switch (i)
@@ -46,8 +46,14 @@ void vTaskADC2Conversation(void)
         
         if ( adc_channel[i] == ESP_OK ) 
         {
-            voltage_data[i]=(float)read_raw*ADC_Calib;
-            printf("ADC %d: %d, Voltage value: %f\n", i, read_raw, voltage_data[i] );
+            voltage_data[i]=(float)read_raw*ADC_Calib-1.25;
+            if(i==0)
+                raw_data[i]=voltage_data[i]*Current_Calib;
+            else
+                raw_data[i]=voltage_data[i]*Voltage_Calib;
+            #if DEBUG_ADC
+            printf("ADC %d: %d, Voltage value: %f\n", i, read_raw, raw_data[i] );
+            #endif
         } else if ( adc_channel[i] == ESP_ERR_INVALID_STATE ) 
         {
             printf("%s: ADC2 not initialized yet.\n", esp_err_to_name(adc_channel[i]));
@@ -60,5 +66,5 @@ void vTaskADC2Conversation(void)
             printf("%s\n", esp_err_to_name(adc_channel[i]));
         }
     }
-    vTaskMQTTSend(voltage_data);
+    vTaskMQTTPublish(raw_data);
 }

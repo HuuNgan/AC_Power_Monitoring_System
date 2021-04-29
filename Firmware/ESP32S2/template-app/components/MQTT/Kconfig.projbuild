@@ -1,18 +1,22 @@
 menu "Topic"
-    config VOLTAGE_P_TRANSFER
+    config VOLTAGE_P_TOPIC
         string "voltage_topic_1"
         default "client/voltage_p"
 
-    config VOLTAGE_N_TRANSFER
+    config VOLTAGE_N_TOPIC
         string "voltage_topic_2"
         default "client/voltage_n"
 
-    config CURRENT_TRANSFER
+    config CURRENT_TOPIC
         string "current_topic"
         default "client/current"
         
-    config PHASE_TRANSFER
-        string "phase_topic_1"
+    config PHASE_TOPIC
+        string "phase_topic"
         default "client/phase"
+
+    config CONTROL_TOPIC
+        string "control_topic"
+        default "client/control"
     
 endmenu
