@@ -23,48 +23,78 @@ void adc_init(void)
     vTaskDelay(100);
 }
 
+float sum_array(float *start_p,float *end_p, float init)
+{
+    float sum = init;
+    for (size_t i = 0; i < end_p-start_p; i++)
+    {
+        sum+=*(start_p+i);
+    }
+    return sum;
+}
+
 void vTaskADC2Conversation(void)
 {
     int read_raw=0;
-    float voltage_data[3],raw_data[3];
-    for (int i = 0; i < 3; i++)
+    static float raw_data_current[Range_data],raw_data_voltage_P[Range_data],raw_data_voltage_N[Range_data],TX_BUFFER_ADC[4];
+    static uint8_t cnt=0;
+    #ifdef RTOS_ADC
+    for(;;)
     {
-        switch (i)
+    #endif
+        if(cnt==10)
         {
-        case 0:
-            adc_channel[i] = adc2_get_raw( ADC_CHANNEL_VOLTAGE_P, width, &read_raw);
-            break;
-        case 1:
-            adc_channel[i] = adc2_get_raw( ADC_CHANNEL_VOLTAGE_N, width, &read_raw);
-            break;
-        case 2:
-            adc_channel[i] = adc2_get_raw( ADC_CHANNEL_CURRENT, width, &read_raw);
-            break;
-        default:
-            break;
+            TX_BUFFER_ADC[0]=(sum_array(raw_data_voltage_P,raw_data_voltage_P+Range_data,0))/Range_data;
+            TX_BUFFER_ADC[1]=(sum_array(raw_data_voltage_N,raw_data_voltage_N+Range_data,0))/Range_data;
+            TX_BUFFER_ADC[2]=(sum_array(raw_data_current,raw_data_current+Range_data,0))/Range_data;
+            cnt=0;
+            //startMQTTSend
         }
-        
-        if ( adc_channel[i] == ESP_OK ) 
+
+        for (int i = 0; i < 3; i++)
         {
-            voltage_data[i]=(float)read_raw*ADC_Calib-1.25;
-            if(i==0)
-                raw_data[i]=voltage_data[i]*Current_Calib;
-            else
-                raw_data[i]=voltage_data[i]*Voltage_Calib;
-            #if DEBUG_ADC
-            printf("ADC %d: %d, Voltage value: %f\n", i, read_raw, raw_data[i] );
-            #endif
-        } else if ( adc_channel[i] == ESP_ERR_INVALID_STATE ) 
-        {
-            printf("%s: ADC2 not initialized yet.\n", esp_err_to_name(adc_channel[i]));
-        } else if ( adc_channel[i] == ESP_ERR_TIMEOUT ) 
-        {
-            //This can not happen in this example. But if WiFi is in use, such error code could be returned.
-            printf("%s: ADC2 is in use by Wi-Fi.\n", esp_err_to_name(adc_channel[i]));
-        } else 
-        {
-            printf("%s\n", esp_err_to_name(adc_channel[i]));
+            switch (i)
+            {
+            case 0:
+                adc_channel[i] = adc2_get_raw( ADC_CHANNEL_VOLTAGE_P, width, &read_raw);
+                raw_data_voltage_P[i]=((float)read_raw*ADC_Calib-Zero_point)*Voltage_Calib;
+                break;
+            case 1:
+                adc_channel[i] = adc2_get_raw( ADC_CHANNEL_VOLTAGE_N, width, &read_raw);
+                raw_data_voltage_N[i]=((float)read_raw*ADC_Calib-Zero_point)*Voltage_Calib;
+                break;
+            case 2:
+                adc_channel[i] = adc2_get_raw( ADC_CHANNEL_CURRENT, width, &read_raw);
+                raw_data_current[i]=((float)read_raw*ADC_Calib-Zero_point)*Current_Calib;
+                break;
+            default:
+                break;
+            }
+            
+            if ( adc_channel[i] == ESP_OK ) 
+            {
+                #if DEBUG_ADC
+                printf("ADC %d: %d, Voltage value: %f\n", i, read_raw, raw_data[i] );
+                #endif
+            } 
+            else if ( adc_channel[i] == ESP_ERR_INVALID_STATE ) 
+            {
+                printf("%s: ADC2 not initialized yet.\n", esp_err_to_name(adc_channel[i]));
+            } 
+            else if ( adc_channel[i] == ESP_ERR_TIMEOUT ) 
+            {
+                //This can not happen in this example. But if WiFi is in use, such error code could be returned.
+                printf("%s: ADC2 is in use by Wi-Fi.\n", esp_err_to_name(adc_channel[i]));
+            } 
+            else 
+            {
+                printf("%s\n", esp_err_to_name(adc_channel[i]));
+            }
         }
+
+        cnt++;
+    #ifdef RTOS_ADC
     }
-    vTaskMQTTPublish(raw_data);
+    #endif
+    // vTaskMQTTPublish(raw_data);
 }

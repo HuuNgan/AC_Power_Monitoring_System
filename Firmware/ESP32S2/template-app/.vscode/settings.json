@@ -16,7 +16,11 @@
     "err.h": "c",
     "adc.h": "c",
     "complex": "c",
-    "system_error": "c"
+    "system_error": "c",
+    "mqtt.h": "c",
+    "chrono": "c",
+    "algorithm": "c",
+    "numeric": "c"
   },
   "idf.port": "/dev/ttyUSB0",
   "idf.adapterTargetName": "esp32s2",
@@ -24,4 +28,5 @@
     "interface/ftdi/esp32_devkitj_v1.cfg",
     "target/esp32s2.cfg"
   ],
+  "git.ignoreLimitWarning": true,
 }

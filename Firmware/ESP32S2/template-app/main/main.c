@@ -24,20 +24,12 @@
 #include "../components/MQTT/include/MQTT.h"
 #include "../components/ADC/include/ADC.h"
 #include "../components/Timer/include/Timer.h"
-
-#define BLINK_LED 2
-
-void init_button(void)
-{
-    //do not thing
-}
+#include "../components/SmartConfig/include/SmartConfig.h"
+#include "../components/GPIO/include/GPIO.h"
 
 void init_config(void)
 {
-    gpio_pad_select_gpio(BLINK_LED);
-    gpio_set_direction(BLINK_LED,GPIO_MODE_OUTPUT);
-
-    init_button();
+    GPIO_init();
     wifi_init_sta();
     adc_init();
     Timer_phase_init();
@@ -54,16 +46,16 @@ void app_main(void)
     ESP_ERROR_CHECK(ret);
 
     init_config();
-    vTaskDelay(1000);
+    vTaskDelay(500);
 
     while(1)
     {
         vTaskADC2Conversation();
         // printf("Hello world\n");
         // gpio_set_level(BLINK_LED,0);
-        vTaskDelay(100);
+        vTaskDelay(50);
         // printf("Bye\n");
         // gpio_set_level(BLINK_LED,1);
-        vTaskDelay(100);
+        // vTaskDelay(100);
     }
 }

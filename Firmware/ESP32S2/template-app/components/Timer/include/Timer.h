@@ -14,6 +14,9 @@
 
 #include "esp_timer.h"
 
+#include "../../../main/Init.h"
+#include "../../GPIO/include/GPIO.h"
+
 volatile esp_timer_handle_t periodic_timer;
 
 void Timer_phase_init(void);

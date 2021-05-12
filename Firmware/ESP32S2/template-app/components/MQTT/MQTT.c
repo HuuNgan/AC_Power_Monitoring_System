@@ -1,8 +1,5 @@
 #include <stdio.h>
 #include "include/MQTT.h"
-#include "driver/gpio.h"
-
-#define BLINK_LED 2
 
 void vTaskMQTTProcess(uint16_t topic_len,char *topic_send,uint16_t message_len ,char *messeage);
 
@@ -116,11 +113,10 @@ void vTaskMQTTProcess(uint16_t topic_len,char *topic_input,uint16_t message_len 
     printf("%s\n",message_sub);
     if(strcmp(topic_sub,"client/control")==0)
     {
-        printf("hi");
         if(strcmp(message_sub,"on")==0)
-            gpio_set_level(BLINK_LED,1);
+            control_built_in_led(true);
         else
-            gpio_set_level(BLINK_LED,0);
+            control_built_in_led(false);
     }
     #endif
     free(topic_sub);

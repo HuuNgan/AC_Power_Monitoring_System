@@ -20,6 +20,7 @@
 #include "mqtt_client.h"
 
 #include "../../../main/Init.h"
+#include "../../GPIO/include/GPIO.h"
 
 void MQTT_init(void);
 void vTaskMQTTPublish(float *input);

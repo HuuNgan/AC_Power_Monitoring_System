@@ -15,4 +15,12 @@ menu "SSID"
         string "Feel Coffee & Tea Express 1 pass"
         default "giaohangmienphi"
 
+    config SSID_HOME
+        string "Home SSID"
+        default "DoLLar"
+
+    config SSPW_HOME
+        string "Home SSPW"
+        default "nowaytohide4520@#"
+
 endmenu
