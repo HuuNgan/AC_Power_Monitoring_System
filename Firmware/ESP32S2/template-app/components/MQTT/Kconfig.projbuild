@@ -18,5 +18,13 @@ menu "Topic"
     config CONTROL_TOPIC
         string "control_topic"
         default "client/control"
+
+    config POWER_TOPIC
+        string "power_topic"
+        default "client/power"
+
+    config POWER_CONSUMTION_TOPIC
+        string "power_consumtion_topic"
+        default "client/power_consumtion"
     
 endmenu

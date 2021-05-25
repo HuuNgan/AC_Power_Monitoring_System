@@ -3,6 +3,9 @@
 
 esp_err_t adc_channel[3];
 static const adc_bits_width_t width = ADC_WIDTH_BIT_13;
+float raw_data_current[Range_data],raw_data_voltage_P[Range_data],raw_data_voltage_N[Range_data],TX_BUFFER_ADC[4];
+
+enum state_adc_t state_adc = INIT;
 
 void adc_init(void)
 {
@@ -36,19 +39,17 @@ float sum_array(float *start_p,float *end_p, float init)
 void vTaskADC2Conversation(void)
 {
     int read_raw=0;
-    static float raw_data_current[Range_data],raw_data_voltage_P[Range_data],raw_data_voltage_N[Range_data],TX_BUFFER_ADC[4];
     static uint8_t cnt=0;
-    #ifdef RTOS_ADC
     for(;;)
     {
-    #endif
-        if(cnt==10)
+        if(cnt==Range_data)
         {
-            TX_BUFFER_ADC[0]=(sum_array(raw_data_voltage_P,raw_data_voltage_P+Range_data,0))/Range_data;
-            TX_BUFFER_ADC[1]=(sum_array(raw_data_voltage_N,raw_data_voltage_N+Range_data,0))/Range_data;
-            TX_BUFFER_ADC[2]=(sum_array(raw_data_current,raw_data_current+Range_data,0))/Range_data;
+            state_adc=DOWN;
             cnt=0;
-            //startMQTTSend
+        }
+        else if(cnt==Range_data/2)
+        {
+            state_adc=UP;
         }
 
         for (int i = 0; i < 3; i++)
@@ -57,15 +58,15 @@ void vTaskADC2Conversation(void)
             {
             case 0:
                 adc_channel[i] = adc2_get_raw( ADC_CHANNEL_VOLTAGE_P, width, &read_raw);
-                raw_data_voltage_P[i]=((float)read_raw*ADC_Calib-Zero_point)*Voltage_Calib;
+                raw_data_voltage_P[cnt]=(((float)read_raw*ADC_Calib-Zero_point)*Voltage_Calib/Voltage_coefficient)*Total_res*0.1;
                 break;
             case 1:
                 adc_channel[i] = adc2_get_raw( ADC_CHANNEL_VOLTAGE_N, width, &read_raw);
-                raw_data_voltage_N[i]=((float)read_raw*ADC_Calib-Zero_point)*Voltage_Calib;
+                raw_data_voltage_N[cnt]=(((float)read_raw*ADC_Calib-Zero_point)*Voltage_Calib/Voltage_coefficient)*Total_res*0.1;
                 break;
             case 2:
                 adc_channel[i] = adc2_get_raw( ADC_CHANNEL_CURRENT, width, &read_raw);
-                raw_data_current[i]=((float)read_raw*ADC_Calib-Zero_point)*Current_Calib;
+                raw_data_current[cnt]=((float)read_raw*ADC_Calib-Zero_point)*Current_Calib;
                 break;
             default:
                 break;
@@ -73,8 +74,8 @@ void vTaskADC2Conversation(void)
             
             if ( adc_channel[i] == ESP_OK ) 
             {
-                #if DEBUG_ADC
-                printf("ADC %d: %d, Voltage value: %f\n", i, read_raw, raw_data[i] );
+                #if DEBUG_USER_ADC
+                printf("ADC %d: %d, Voltage value: %f\n", i, read_raw, TX_BUFFER_ADC[0]);
                 #endif
             } 
             else if ( adc_channel[i] == ESP_ERR_INVALID_STATE ) 
@@ -93,8 +94,9 @@ void vTaskADC2Conversation(void)
         }
 
         cnt++;
-    #ifdef RTOS_ADC
-    }
+    #if Time_dilation
+        vTaskDelay(Time_dilation);
     #endif
+    }
     // vTaskMQTTPublish(raw_data);
 }

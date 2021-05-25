@@ -20,7 +20,8 @@
     "mqtt.h": "c",
     "chrono": "c",
     "algorithm": "c",
-    "numeric": "c"
+    "numeric": "c",
+    "gpio.h": "c"
   },
   "idf.port": "/dev/ttyUSB0",
   "idf.adapterTargetName": "esp32s2",

@@ -5,7 +5,7 @@ void vTaskMQTTProcess(uint16_t topic_len,char *topic_send,uint16_t message_len ,
 
 static const char *TAG = "MQTT_ESP32S2";
 
-static const char *IP_Broker = "192.168.1.8";
+static const char *IP_Broker = "192.168.1.14";
 
 esp_mqtt_client_handle_t client;
 
@@ -80,15 +80,21 @@ void MQTT_init(void)
     vTaskMQTTSubscribe();
 }
 
-void vTaskMQTTPublish(float *input)
+void vTaskMQTTPublish(float voltage,float current,float alpha_delay,float wattage,uint64_t Power_consumtion_data)
 {
     char str_send[50];
-    sprintf(str_send,"%f",*(input));
+    sprintf(str_send,"%f",voltage);
     esp_mqtt_client_publish(client,CONFIG_VOLTAGE_P_TOPIC,str_send,0,0,0);
-    sprintf(str_send,"%f",*(input+1));
-    esp_mqtt_client_publish(client,CONFIG_VOLTAGE_N_TOPIC,str_send,0,0,0);
-    sprintf(str_send,"%f",*(input+2));
+    // sprintf(str_send,"%f",*(input+1));
+    // esp_mqtt_client_publish(client,CONFIG_VOLTAGE_N_TOPIC,str_send,0,0,0);
+    sprintf(str_send,"%f",current);
     esp_mqtt_client_publish(client,CONFIG_CURRENT_TOPIC,str_send,0,0,0);
+    sprintf(str_send,"%f",alpha_delay);
+    esp_mqtt_client_publish(client,CONFIG_PHASE_TOPIC,str_send,0,0,0);
+    sprintf(str_send,"%f",wattage);
+    esp_mqtt_client_publish(client,CONFIG_POWER_TOPIC,str_send,0,0,0);
+    sprintf(str_send,"%lld",Power_consumtion_data);
+    esp_mqtt_client_publish(client,CONFIG_POWER_CONSUMTION_TOPIC,str_send,0,0,0);
 }
 
 void vTaskMQTTSubscribe(void)
@@ -107,7 +113,7 @@ void vTaskMQTTProcess(uint16_t topic_len,char *topic_input,uint16_t message_len 
     strncpy(message_sub,message_input,message_len);
     topic_sub[topic_len]='\0';
     message_sub[message_len]='\0';
-    #if DEBUG_MQTT
+    #if DEBUG_USER_MQTT
     printf("%d\n%d\n",topic_len,message_len);
     printf("%s\n",topic_sub);
     printf("%s\n",message_sub);

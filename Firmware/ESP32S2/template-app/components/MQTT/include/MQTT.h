@@ -1,3 +1,6 @@
+#ifndef MQTT_H
+#define MQTT_H
+
 #include <stdio.h>
 #include <stdint.h>
 #include <stddef.h>
@@ -23,5 +26,7 @@
 #include "../../GPIO/include/GPIO.h"
 
 void MQTT_init(void);
-void vTaskMQTTPublish(float *input);
+void vTaskMQTTPublish(float voltage,float current,float alpha_delay,float wattage,uint64_t Power_consumtion);
 void vTaskMQTTSubscribe(void);
+
+#endif

@@ -4,8 +4,8 @@ menu "SSID"
         default "PIFLab"
 
     config SSPW_PIF
-        string "PIFLab pass"
-        default "Payitforward"
+        string "PIFLab_pass"
+        default "tamsotam"
 
     config SSID_CF1
         string "Feel Coffee & Tea Express 1"
@@ -22,5 +22,13 @@ menu "SSID"
     config SSPW_HOME
         string "Home SSPW"
         default "nowaytohide4520@#"
+
+    config SSID_PIF_COMPANY
+        string "PIFlab.io"
+        default "PIFlab.io"
+
+    config SSPW_PIF_COMPANY
+        string "PIFlab.io pass"
+        default "khonghoisaocopass"
 
 endmenu

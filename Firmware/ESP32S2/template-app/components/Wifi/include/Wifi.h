@@ -1,3 +1,6 @@
+#ifndef WIFI_H
+#define WIFI_H
+
 #include "esp_wifi.h"
 #include <stdio.h>
 #include <string.h>
@@ -14,3 +17,5 @@
 
 void wifi_init_sta(void);
 void vTaskSmartConfig(void);
+
+#endif

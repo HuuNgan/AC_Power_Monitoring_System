@@ -1,25 +1,30 @@
 #include <stdio.h>
 #include "GPIO.h"
+#include "../../../main/Init.h"
 
 static xQueueHandle gpio_evt_queue = NULL;
 
-static void IRAM_ATTR GPIO_ISR_Handler(void* arg)
+void IRAM_ATTR GPIO_ISR_Handler(void* arg)
 {
     //do thing
     uint32_t gpio_num = (uint32_t) arg;
-    // xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
+    xQueueSendFromISR(gpio_evt_queue, &gpio_num, NULL);
 }
 
-static void vTaskGPIO_ISR_Process(void* arg)
+void vTaskGPIO_ISR_Process(void* arg)
 {
     uint32_t io_num;
     for(;;)
     {
-        //do thing
-        printf("hi\n");
         if(xQueueReceive(gpio_evt_queue, &io_num, portMAX_DELAY)) 
         {
-            printf("GPIO[%d] intr, val: %d\n", io_num, gpio_get_level(io_num));
+            uint8_t gpio_level=gpio_get_level(io_num);
+
+            #if DEBUG_USER_GPIO
+            printf("GPIO[%d] intr, val: %d\n", io_num, gpio_level);
+            #endif
+
+            Timer_phase_cal(gpio_level);
         }
     }
 }
@@ -46,7 +51,6 @@ void GPIO_init(void)
 
     gpio_install_isr_service(ESP_INTR_FLAG_DEFAULT);
     gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
-    xTaskCreate(vTaskGPIO_ISR_Process,"GPIO_Task_process",512,NULL,5,NULL);
     gpio_isr_handler_add(BUTTON, GPIO_ISR_Handler, (void*) BUTTON);
 }
 
