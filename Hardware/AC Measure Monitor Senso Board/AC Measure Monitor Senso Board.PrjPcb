@@ -72,24 +72,7 @@ GenerateClassCluster=0
 DocumentUniqueId=ETJFHQXJ
 
 [Document3]
-DocumentPath=02_MCU_Interface.SchDoc
-AnnotationEnabled=1
-AnnotateStartValue=1
-AnnotationIndexControlEnabled=0
-AnnotateSuffix=
-AnnotateScope=All
-AnnotateOrder=1
-DoLibraryUpdate=1
-DoDatabaseUpdate=1
-ClassGenCCAutoEnabled=1
-ClassGenCCAutoRoomEnabled=1
-ClassGenNCAutoScope=None
-DItemRevisionGUID=
-GenerateClassCluster=0
-DocumentUniqueId=BITHEJPI
-
-[Document4]
-DocumentPath=03_Power_Supply.SchDoc
+DocumentPath=02_Power_Supply.SchDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
 AnnotationIndexControlEnabled=0
@@ -105,7 +88,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=REDOJCDB
 
-[Document5]
+[Document4]
 DocumentPath=OutputJob.OutJob
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -121,6 +104,23 @@ ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
+
+[Document5]
+DocumentPath=MeasurePCB_Clone.PcbDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=KFQRKXRT
 
 [Configuration1]
 Name=Sources
