@@ -30,16 +30,16 @@
 
 #define Range_data 32
 
-#define ADC_CHANNEL_VOLTAGE_P   2
-#define ADC_CHANNEL_VOLTAGE_N   3
-#define ADC_CHANNEL_CURRENT     0
+#define ADC_CHANNEL_VOLTAGE_P   (ADC_CHANNEL_VOLTAGE_P_PIN-11)
+#define ADC_CHANNEL_VOLTAGE_N   (ADC_CHANNEL_VOLTAGE_N_PIN-11)
+#define ADC_CHANNEL_CURRENT     (ADC_CHANNEL_CURRENT_PIN-11)
 
-enum state_adc_t
+typedef enum 
 {
     UP,
     DOWN,
     INIT
-};
+}state_adc_t;
 
 // typedef uint8_t state_adc_t;
 
@@ -47,6 +47,6 @@ void adc_init(void);
 void vTaskADC2Conversation(void);
 
 float raw_data_current[Range_data],raw_data_voltage_P[Range_data],raw_data_voltage_N[Range_data],TX_BUFFER_ADC[4];
-enum state_adc_t state_adc;
+state_adc_t state_adc;
 
 #endif

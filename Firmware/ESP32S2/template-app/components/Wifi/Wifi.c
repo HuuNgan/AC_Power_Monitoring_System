@@ -59,11 +59,13 @@ void wifi_init_sta(void)
     ESP_ERROR_CHECK(esp_event_handler_instance_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &event_handler, NULL, &instance_any_id));
     ESP_ERROR_CHECK(esp_event_handler_instance_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &event_handler, NULL, &instance_got_ip));
 
+    Flash_read();
+
     wifi_config_t wifi_config = {
         .sta = {
-            .ssid = EXAMPLE_ESP_WIFI_SSID,
-            .password = EXAMPLE_ESP_WIFI_PASS,
-	     .threshold.authmode = WIFI_AUTH_WPA2_PSK,
+            // .ssid = SSID,
+            // .password = PSWD,
+            .threshold.authmode = WIFI_AUTH_WPA2_PSK,
 
             .pmf_cfg = {
                 .capable = true,
@@ -71,6 +73,8 @@ void wifi_init_sta(void)
             },
         },
     };
+    memcpy(wifi_config.sta.ssid,SSID,strlen(SSID));
+    memcpy(wifi_config.sta.password,PSWD,strlen(PSWD));
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA) );
     ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config) );
     ESP_ERROR_CHECK(esp_wifi_start() );

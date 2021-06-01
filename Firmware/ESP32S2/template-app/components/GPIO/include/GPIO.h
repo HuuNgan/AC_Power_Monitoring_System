@@ -14,10 +14,15 @@
 
 #include "../../Timer/include/Timer.h"
 
-#define BLINK_LED               (2)
+#define BLINK_LED               BLINK_LED_PIN
 #define BLINK_LED_PIN_SEL       (1ULL<<BLINK_LED)
-#define BUTTON                  (4)
+
+#define PHASE                   PHASE_PIN
+#define PHASE_PIN_SEL           (1ULL<<PHASE)
+
+#define BUTTON                  BUTTON_INPUT_PIN
 #define BUTTON_PIN_SEL          (1ULL<<BUTTON)
+
 #define ESP_INTR_FLAG_DEFAULT   (0)
 
 void GPIO_init(void);

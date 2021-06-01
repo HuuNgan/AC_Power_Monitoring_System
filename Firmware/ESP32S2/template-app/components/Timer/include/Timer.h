@@ -19,6 +19,7 @@
 
 #include "../../../main/Init.h"
 #include "../../GPIO/include/GPIO.h"
+#include "../../SmartConfig/include/SmartConfig.h"
 
 #define Clock_divider   40000
 #define Max_timer       18446744073709551615
@@ -30,6 +31,7 @@ volatile esp_timer_handle_t oneshot_timer;
 
 void Timer_phase_init(void);
 void Timer_phase_cal(bool state);
+void Timer_Smartconfig(bool state);
 void Timer_power_consumption(uint64_t *power_consumption,float *wattage);
 
 float alpha_delay;

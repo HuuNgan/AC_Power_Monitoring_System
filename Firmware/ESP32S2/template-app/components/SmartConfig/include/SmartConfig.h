@@ -1,3 +1,6 @@
+#ifndef SMART_CONFIG_H
+#define SMART_CONFIG_H
+
 #include <stdio.h>
 #include <string.h>
 #include "freertos/FreeRTOS.h"
@@ -10,5 +13,9 @@
 #include "esp_wifi.h"
 
 #include "../../Wifi/include/Wifi.h"
+#include "../../SPI_Flash/include/SPI_Flash.h"
 
 void vTaskSmartConfig(void);
+void vTaskSmartConfigStart(void);
+
+#endif

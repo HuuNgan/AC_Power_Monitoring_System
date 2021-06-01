@@ -15,6 +15,8 @@
 #include "lwip/err.h"
 #include "lwip/sys.h"
 
+#include "../../SPI_Flash/include/SPI_Flash.h"
+
 void wifi_init_sta(void);
 void vTaskSmartConfig(void);
 
