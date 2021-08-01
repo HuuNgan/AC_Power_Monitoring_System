@@ -1,0 +1,14 @@
+Removed Pin From Net: NetName=TX_1 Pin=P1-1
+Removed Pin From Net: NetName=GND Pin=P1-3
+Removed Pin From Net: NetName=SDA Pin=P3-2
+Removed Pin From Net: NetName=SCL Pin=P3-3
+Removed Pin From Net: NetName=GND Pin=P3-4
+Added Pin To Net: NetName=GND Pin=P1-1
+Added Pin To Net: NetName=TX_1 Pin=P1-3
+Added Pin To Net: NetName=GND Pin=P3-1
+Added Pin To Net: NetName=SCL Pin=P3-2
+Added Pin To Net: NetName=SDA Pin=P3-3
+Added Pin To Net: NetName=NetP3_4 Pin=P3-4
+Added Pin To Net: NetName=NetP3_4 Pin=R6-1
+Added Pin To Net: NetName=NetP3_4 Pin=R8-2
+Added Net: Name=NetP3_4
