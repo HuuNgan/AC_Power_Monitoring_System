@@ -26,6 +26,7 @@
 #include "../components/Timer/include/Timer.h"
 #include "../components/SmartConfig/include/SmartConfig.h"
 #include "../components/GPIO/include/GPIO.h"
+#include "../components/SPI_Flash/include/SPI_Flash.h"
 
 #include "Init.h"
 
@@ -116,6 +117,7 @@ void init_config(void)
     adc_init();
     Timer_phase_init();
     MQTT_init();
+    SPI_Init();
 }
 
 void app_main(void)

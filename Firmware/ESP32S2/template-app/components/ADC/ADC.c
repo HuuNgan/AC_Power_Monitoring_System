@@ -5,7 +5,7 @@ esp_err_t adc_channel[3];
 static const adc_bits_width_t width = ADC_WIDTH_BIT_13;
 float raw_data_current[Range_data],raw_data_voltage_P[Range_data],raw_data_voltage_N[Range_data],TX_BUFFER_ADC[4];
 
-enum state_adc_t state_adc = INIT;
+state_adc_t state_adc = INIT;
 
 void adc_init(void)
 {

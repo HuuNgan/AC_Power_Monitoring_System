@@ -20,11 +20,18 @@ void vTaskGPIO_ISR_Process(void* arg)
         {
             uint8_t gpio_level=gpio_get_level(io_num);
 
+            if(io_num==PHASE)
+            {
+                Timer_phase_cal(gpio_level);
+            }
+            else if(io_num==BUTTON)
+            {
+                Timer_Smartconfig(gpio_level);
+            }
+
             #if DEBUG_USER_GPIO
             printf("GPIO[%d] intr, val: %d\n", io_num, gpio_level);
             #endif
-
-            Timer_phase_cal(gpio_level);
         }
     }
 }
@@ -41,7 +48,15 @@ void GPIO_init(void)
     gpio_init_cfg.pull_up_en=0;
     gpio_config(&gpio_init_cfg);
 
-    //config button
+    //config phase detect
+    gpio_init_cfg.pin_bit_mask=PHASE_PIN_SEL;
+    gpio_init_cfg.mode=GPIO_MODE_INPUT;
+    gpio_init_cfg.intr_type=GPIO_INTR_ANYEDGE;
+    gpio_init_cfg.pull_down_en=1;
+    gpio_init_cfg.pull_up_en=0;
+    gpio_config(&gpio_init_cfg);
+
+    //config button to smartconfig
     gpio_init_cfg.pin_bit_mask=BUTTON_PIN_SEL;
     gpio_init_cfg.mode=GPIO_MODE_INPUT;
     gpio_init_cfg.intr_type=GPIO_INTR_ANYEDGE;
@@ -51,6 +66,7 @@ void GPIO_init(void)
 
     gpio_install_isr_service(ESP_INTR_FLAG_DEFAULT);
     gpio_evt_queue = xQueueCreate(10, sizeof(uint32_t));
+    gpio_isr_handler_add(PHASE, GPIO_ISR_Handler, (void*) PHASE);
     gpio_isr_handler_add(BUTTON, GPIO_ISR_Handler, (void*) BUTTON);
 }
 

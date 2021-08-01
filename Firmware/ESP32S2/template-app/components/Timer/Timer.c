@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include "Timer.h"
 
-static  bool current_state_gpio=1,current_state_calculator=1;
+static bool current_state_gpio=1;
 float alpha_delay=0;
 
 static void periodic_timer_callback(void* arg);
@@ -68,6 +68,41 @@ void Timer_power_consumption(uint64_t *power_consumption,float *wattage)
     #if DEBUG_USER_TIMER
     printf("Power consumption: %lld\n",*power_consumption/1000000);
     #endif
+}
+
+void Timer_Smartconfig(bool state)
+{
+    static uint64_t old_timer,new_timer=0;
+    if(current_state_gpio==state)
+    {
+        return;
+    }
+    else
+    {
+        current_state_gpio=state;
+    }
+    if(state==0)
+    {
+        old_timer=esp_timer_get_time();
+    }
+    else if(state==1)
+    {
+        new_timer=esp_timer_get_time();
+        float delta_timer=(new_timer-old_timer);
+        if (delta_timer<0)
+        {
+            delta_timer=new_timer+(Max_timer-old_timer);
+        }
+        delta_timer/=1000000;
+        if(delta_timer>1.8)
+        {
+            // vTaskSmartConfigStart();
+        }
+        
+        #if DEBUG_USER_TIMER_SMART_CONFIG
+        printf("Phase delay: %f\n",alpha_delay);
+        #endif
+    }
 }
 
 static void periodic_timer_callback(void* arg)
