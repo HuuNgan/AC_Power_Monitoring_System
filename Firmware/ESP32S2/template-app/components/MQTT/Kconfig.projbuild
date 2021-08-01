@@ -1,0 +1,30 @@
+menu "Topic"
+    config VOLTAGE_P_TOPIC
+        string "voltage_topic_1"
+        default "client/voltage_p"
+
+    config VOLTAGE_N_TOPIC
+        string "voltage_topic_2"
+        default "client/voltage_n"
+
+    config CURRENT_TOPIC
+        string "current_topic"
+        default "client/current"
+        
+    config PHASE_TOPIC
+        string "phase_topic"
+        default "client/phase"
+
+    config CONTROL_TOPIC
+        string "control_topic"
+        default "client/control"
+
+    config POWER_TOPIC
+        string "power_topic"
+        default "client/power"
+
+    config POWER_CONSUMTION_TOPIC
+        string "power_consumtion_topic"
+        default "client/power_consumtion"
+    
+endmenu
